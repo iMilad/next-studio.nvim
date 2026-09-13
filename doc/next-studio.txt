@@ -1,0 +1,162 @@
+*next-studio.txt*           Project workspaces for Neovim 0.12+
+
+NEXT STUDIO                                              *next-studio*
+
+One project per tab, with Editor, Agent, Terminal and Project Notes.
+Arrange panes with the keyboard and save a different layout for each project.
+Version 0.2.0. MIT license. No required external Neovim plugins.
+
+GETTING STARTED                                          *next-studio-setup*
+
+Clone https://github.com/iMilad/next-studio.nvim.git to ~/plugins/next-studio.nvim,
+or extract a portable ZIP there. Add it to runtimepath and call setup once.
+Set your leader before setup: >lua
+    vim.g.mapleader = " "
+    vim.opt.rtp:prepend(vim.fn.expand("~/plugins/next-studio.nvim"))
+    require("next_studio").setup({
+      auto_open = true,
+      project_roots = { "~/workspace" },
+    })
+<
+For lazy.nvim / LazyVim, use "iMilad/next-studio.nvim", main = "next_studio",
+lazy = false and your options in opts. A local checkout can instead use dir
+pointing at the plugin folder and name = "next-studio.nvim". See the README.
+
+Run :checkhealth next_studio. Use :StudioOpen /path/to/project or <leader>pp.
+With auto_open enabled, starting inside a folder or with one directory argument
+opens its workspace. Home and ~/workspace keep your usual startup screen.
+:StudioAdd bookmarks folders outside the discovery roots.
+
+KEYS                                                    *next-studio-keys*
+
+The default prefix is <leader>p. Examples assume your leader is Space.
+The prefix works in Normal mode and Studio terminal input.
+
+    Space p p/o     Project picker / folder prompt
+    Space p v/b     Empty pane on the right / below
+    Space p c       Choose this pane's type
+    Space p x/w     Close this pane / choose a pane
+    Space p m       Zoom this pane / restore its original window
+    Space p r       Resize mode: h/l width, j/k height, = equalize
+                    Enter keeps the size; Esc restores the previous sizes
+    Space p e       Swap this pane's contents and title with another pane
+    Space p u/U     Undo / redo Studio layout changes in this session
+    Space p N       Pane name in pickers (empty input resets it)
+    Space p s/n     Save layout / save with a name
+    Space p l       Choose a named layout with an ASCII preview
+    Space p d       Reset to the three-pane default
+    Space p t/a     Toggle terminal / agent pane
+    Space p q       Toggle Project Notes below the workspace
+    Space p k       Toggle a checkbox on the current Notes line
+    Space p j       Run a project command or return to its output
+    Space p z       ASCII screensaver / return
+    F12             Same cover, also in Insert/Visual/Select/command-line mode
+    Space p h       Quick guide
+    Ctrl-h/j/k/l    Navigate panes; existing Normal bindings take precedence
+    Esc Esc         Leave terminal input
+    gt / gT         Next / previous project tab
+
+Pane roles have different backgrounds: Editor blue, Terminal green, Agent
+purple and Notes gold. The focused pane becomes lighter, with a bright separator.
+No persistent title row is used. Names appear in the pane/swap/layout pickers.
+Use your file manager's existing shortcuts for file browsing.
+An empty Editor or Agent pane starts when you press i. Agent is a shell for the
+CLI you choose to launch; no provider or command starts automatically there.
+
+COMMANDS                                                *next-studio-commands*
+
+    :Studio                 Adopt the current folder
+    :StudioProjects         Pick or switch projects
+    :StudioOpen [folder]     Open a folder (prompts when omitted)
+    :StudioAdd [folder]      Bookmark a folder (current folder when omitted)
+    :StudioSave[!] [name]    Save arrangement; ! accepts a concurrent overwrite
+    :StudioLayouts          Choose a saved layout with an ASCII preview
+    :StudioReset            Restore the default arrangement
+    :StudioPane [type]      Set editor/agent/terminal/notes, or choose
+    :StudioVertical         New empty right pane
+    :StudioHorizontal       New empty bottom pane
+    :StudioClose            Close this pane, retaining its buffer and job
+    :StudioWindows          Choose a pane to focus
+    :StudioTerminal         Toggle a terminal pane
+    :StudioAgent            Toggle an agent pane
+    :StudioZoom             Zoom / restore
+    :StudioResize           Enter / finish keyboard resize
+    :StudioSwap             Choose another pane to exchange contents with
+    :StudioUndo             Undo the last Studio layout change
+    :StudioRedo             Redo it
+    :StudioRename [title]   Rename the current pane (prompts when omitted)
+    :StudioNotes            Toggle Project Notes
+    :StudioCheck            Toggle a Notes checkbox
+    :StudioTasks            Project commands and their output
+    :StudioScreensaver      Cover / uncover Neovim
+    :StudioHelp             Quick guide
+
+NOTES AND COMMANDS                                       *next-studio-notes*
+
+Notes are Markdown with optional - [ ] checkboxes. They save on :write, leaving
+the buffer and normal exit, outside the project checkout. A concurrent writer
+causes an error and leaves the edited buffer available; it is not overwritten.
+
+The Project commands picker asks for a command and title. It runs only after
+that explicit action, with the project as cwd, and opens a named terminal pane.
+The same picker shows output, reruns a command or stops it. Ad-hoc command history
+stays in memory. Commands are not read from Notes or replayed from saved layouts.
+
+Reusable commands can be configured through tasks: >lua
+    tasks = {
+      { name = "Development server", cmd = { "npm", "run", "dev" } },
+    }
+<
+tasks may also be a function(root) returning this list. Argument arrays bypass
+shell parsing. String commands use 'shell', without zsh/bash startup files.
+Listing a command does not run it.
+
+OPTIONS                                                 *next-studio-options*
+
+Pass these to require("next_studio").setup({...}) once: >lua
+    auto_open = false,
+    project_roots = {},
+    state_dir = nil,          -- stdpath("state") .. "/next-workspaces"
+    keymaps = true,
+    key_prefix = "<leader>p",
+    history_limit = 30,
+    screensaver = { enabled = true, key = "<F12>" },
+    shell = nil,             -- optional argv for pane shells
+    tasks = {},
+<
+Existing Git worktree folders work as separate projects. File browsing uses
+your existing Neovim tools; Studio does not configure or disable them.
+keymaps = false disables global Studio mappings. Temporary control keys stay
+local to their interfaces. The plugin never sets your leader.
+Snacks improves pickers when already configured; it is optional.
+
+UPGRADING FROM 0.1                                       *next-studio-upgrade*
+
+Version 0.2 removes Files, its preview/drawer and Yazi integration. Remove the
+files option and files()/file_drawer() calls from your config. Space p f/F and
+:StudioFiles/:StudioFilesToggle are no longer registered.
+Old layouts discard Files leaves and collapse their splits, preserving other
+panes. A Files-only layout becomes one empty Editor. Loading migrates in memory;
+the next normal save writes the new arrangement. External file-browser windows
+are excluded from Studio's layouts and retain their own appearance.
+
+PERSISTENCE                                              *next-studio-persistence*
+
+Layouts save on switches and normal exit. Named snapshots remain separate from
+Last. Layout data contains roles, titles, proportions, ordinary file paths and
+cursor lines. Notes are separate private Markdown files. Undo history stays in
+memory and tracks Studio actions; it does not replace normal text undo.
+
+Hiding or changing panes preserves buffers and live jobs in this Neovim. After
+quitting, terminals start fresh and Agent waits for your input. Layouts never
+store unsaved text, command strings, process output or agent conversations.
+Save edited files before quitting. State writes are private and atomic.
+
+The screensaver is an opaque visual cover inside Neovim, not a password or OS
+lock. Jobs continue behind it. Other keys/clicks keep it covered. Press F12 or
+the configured Studio return shortcut to continue in the same editing state.
+
+Validated on macOS with Neovim 0.12.5. The current implementation uses POSIX
+paths and shells; Windows and older Neovim versions are not claimed.
+
+ vim:tw=78:ts=8:noet:ft=help:norl:
