@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="350" viewBox="0 0 1280 350" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">NEXT Studio for Neovim</title>
+  <desc id="desc">Your projects. Your panes. Your flow. Keyboard-driven project workspaces.</desc>
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" stroke="#1b2940" stroke-width="1"/></pattern>
+    <linearGradient id="fade" x1="720" y1="0" x2="1280" y2="350" gradientUnits="userSpaceOnUse"><stop stop-color="#0d1628"/><stop offset="1" stop-color="#172134"/></linearGradient>
+  </defs>
+  <rect width="1280" height="350" rx="20" fill="#090f1d"/>
+  <path d="M902 0H1260Q1280 0 1280 20V330Q1280 350 1260 350H772L902 0Z" fill="url(#fade)"/>
+  <path d="M902 0H1260Q1280 0 1280 20V330Q1280 350 1260 350H772L902 0Z" fill="url(#grid)" opacity=".5"/>
+  <g transform="translate(54 76) scale(1.1)">
+    <rect width="160" height="160" rx="36" fill="#101c2c"/>
+    <path d="M28 28H86V86H28V28Z" fill="#67e8f9"/>
+    <path d="M98 28H132V132H98V28Z" fill="#c4a0ff"/>
+    <path d="M28 98H86V132H28V98Z" fill="#79e5b1"/>
+    <path d="M17 55V17H55" stroke="#f6cf79" stroke-width="6" stroke-linecap="square"/>
+    <path d="M43 46L54 57L43 68M62 69H74" stroke="#102837" stroke-width="5" stroke-linecap="square"/>
+  </g>
+  <g font-family="ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif">
+    <text x="273" y="98" fill="#67e8f9" font-size="14" font-weight="600" letter-spacing="4">NEOVIM / PROJECT WORKSPACES</text>
+    <text x="268" y="172" fill="#edf3ff" font-size="66" font-weight="750" letter-spacing="-2">NEXT STUDIO</text>
+    <text x="273" y="216" fill="#a6b7cf" font-size="23">Your projects. Your panes. Your flow.</text>
+    <text x="273" y="273" fill="#7791ac" font-size="13" letter-spacing="2">SPLIT</text>
+    <path d="M333 267H362M357 263L362 267L357 271" stroke="#36516c" stroke-width="1.5"/>
+    <text x="377" y="273" fill="#7791ac" font-size="13" letter-spacing="2">SHAPE</text>
+    <path d="M450 267H479M474 263L479 267L474 271" stroke="#36516c" stroke-width="1.5"/>
+    <text x="494" y="273" fill="#7791ac" font-size="13" letter-spacing="2">SAVE</text>
+    <path d="M554 267H583M578 263L583 267L578 271" stroke="#36516c" stroke-width="1.5"/>
+    <text x="598" y="273" fill="#79e5b1" font-size="13" letter-spacing="2">RETURN</text>
+  </g>
+  <g transform="translate(951 81)">
+    <rect width="260" height="188" rx="10" fill="#0b1322" stroke="#2b3c54"/>
+    <path d="M0 25H260" stroke="#2b3c54"/>
+    <path d="M14 12H49M62 12H83" stroke="#45607b" stroke-width="3"/>
+    <rect x="12" y="38" width="148" height="89" rx="3" fill="#152c3e" stroke="#67e8f9" stroke-opacity=".6"/>
+    <rect x="172" y="38" width="76" height="89" rx="3" fill="#30223e"/>
+    <rect x="12" y="139" width="236" height="37" rx="3" fill="#19352e"/>
+    <path d="M26 55H87M26 67H131M26 79H106M26 91H119M26 103H71" stroke="#416d84" stroke-width="3"/>
+    <path d="M184 55H232M184 67H221M184 79H228" stroke="#735881" stroke-width="3"/>
+    <path d="M26 152L32 157L26 162M42 162H52" stroke="#79e5b1" stroke-width="2"/>
+    <path d="M4 59V30H33" stroke="#f6cf79" stroke-width="3"/>
+  </g>
+</svg>

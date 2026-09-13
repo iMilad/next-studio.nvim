@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">NEXT Studio</title>
+  <desc id="desc">Three interlocking workspace panes with an amber focus corner.</desc>
+  <rect width="160" height="160" rx="36" fill="#090f1d"/>
+  <path d="M28 28H86V86H28V28Z" fill="#67e8f9"/>
+  <path d="M98 28H132V132H98V28Z" fill="#c4a0ff"/>
+  <path d="M28 98H86V132H28V98Z" fill="#79e5b1"/>
+  <path d="M17 55V17H55" stroke="#f6cf79" stroke-width="6" stroke-linecap="square"/>
+  <path d="M43 46L54 57L43 68M62 69H74" stroke="#102837" stroke-width="5" stroke-linecap="square" stroke-linejoin="miter"/>
+</svg>

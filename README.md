@@ -1,18 +1,40 @@
-# NEXT Studio for Neovim
+<p align="center">
+  <img src="assets/banner.svg" alt="NEXT Studio for Neovim — Your projects. Your panes. Your flow." width="1280">
+</p>
 
-Project workspaces you can arrange with the keyboard and return to later.
+<p align="center">
+  <strong>Keyboard-driven project workspaces for Neovim.</strong><br>
+  Keep your editor, agent shell, terminal and notes together. Save the arrangement. Come back to it.
+</p>
 
-One project per tab. Editor, agent shell, terminal and Project Notes panes.
-Create an empty split, choose its type, name it, move it, and save the arrangement.
-Zoom, resize, undo/redo and an ASCII layout preview make the workspace easy to change.
-A full-screen animated ASCII screensaver hides the Neovim view on demand.
+<p align="center">
+  <a href="#install">Install</a> ·
+  <a href="#in-action">In action</a> ·
+  <a href="#shortcuts">Shortcuts</a> ·
+  <a href="#configuration">Configure</a> ·
+  <a href="doc/next-studio.txt">Reference</a>
+</p>
 
-**Version 0.2.0 · Neovim 0.12+ · MIT**
+<p align="center">
+  <code>Neovim 0.12+</code> &nbsp; <code>Lua</code> &nbsp;
+  <code>No required plugins</code> &nbsp; <a href="LICENSE">MIT</a>
+</p>
 
-The core needs no other Neovim plugin. Use your existing file manager and file
-finders. Studio does not supply a file browser or replace their shortcuts.
-Snacks provides nicer project/input pickers when it is already configured. Your colorscheme, statusline and dashboard stay
-under your configuration's control. The plugin supplies its own pane highlights.
+![An Orchard project with a Lua editor, Agent launcher and terminal](assets/workspace.png)
+
+<p align="center"><sub>Actual Neovim, synthetic project. The demo theme and bars are custom; pane colors and workspace controls come from Studio.</sub></p>
+
+## A workspace that fits the work
+
+| | |
+| --- | --- |
+| **One project, one tab**<br>Choose a project or open Neovim inside its folder. Switch without losing live buffers and shells. | **Build your own layout**<br>Split right or below, choose a role, then resize, swap or zoom. Undo the arrangement when it feels wrong. |
+| **Save a place to return to**<br>Keep named layouts per project and choose them with an ASCII preview. | **Notes within reach**<br>Keep Markdown notes and checkboxes beside the code, saved outside the project checkout. |
+| **An agent's place at the table**<br>A local shell for the CLI you choose. Start it yourself; keep it beside your editor. | **One key to cover the screen**<br>F12 brings up an animated ASCII scene. F12 brings your workspace back. |
+
+Studio works with your existing file manager, colorscheme, statusline and dashboard.
+The core has **no required Neovim plugins**. If you already use Snacks, Studio can
+use its project and input pickers. File navigation stays with the tools you use.
 
 ## Install
 
@@ -32,7 +54,10 @@ return {
 }
 ```
 
-With **plain Neovim**, clone the plugin:
+<details>
+<summary><strong>Plain Neovim / local checkout</strong></summary>
+
+Clone the plugin:
 
 ```sh
 git clone https://github.com/iMilad/next-studio.nvim.git ~/plugins/next-studio.nvim
@@ -49,6 +74,12 @@ require("next_studio").setup({
 })
 ```
 
+For a local checkout or extracted portable ZIP, use
+`dir = vim.fn.expand("~/plugins/next-studio.nvim")` in place of the repository
+string in the lazy.nvim spec, and add `name = "next-studio.nvim"`.
+
+</details>
+
 Restart Neovim and run `:checkhealth next_studio`. `:help next-studio` opens the
 packaged reference, and `<leader>ph` shows the quick guide. Open a project with
 `:StudioOpen /path/to/project` or choose one with `<leader>pp`.
@@ -56,14 +87,52 @@ With `auto_open = true`, starting Neovim inside a folder, or with a single
 directory argument, opens that workspace. Starting from Home leaves your normal
 startup screen available. `:StudioAdd` bookmarks the current folder.
 
-For a local checkout or extracted portable ZIP, use
-`dir = vim.fn.expand("~/plugins/next-studio.nvim")` in place of the repository
-string in the lazy.nvim spec, and add `name = "next-studio.nvim"`.
+### Your first minute
+
+1. **Open a project:** `Space p p` to pick one, or `:StudioOpen /path/to/project`.
+2. **Make room:** `Space p v` splits right; `Space p b` splits below.
+3. **Give it a role:** `Space p c` chooses Editor, Agent, Terminal or Project Notes.
+4. **Keep it:** `Space p n` names the layout. `Space p l` brings it back.
+
+These examples assume Space is your leader. Studio uses your existing leader and
+does not change it; set `vim.g.mapleader = " "` before setup if you want these keys.
+
+## In action
+
+### Think beside the code
+
+Toggle Project Notes with `Space p q`. Check off a thought with `Space p k`.
+The gold background distinguishes Notes; the focused pane stays brighter.
+
+![Project Notes with Markdown checkboxes beside a Lua editor](assets/notes.png)
+
+### Give each kind of work its own arrangement
+
+Keep a **Build** layout and a **Plan** layout in the same project. `Space p l`
+shows the split geometry before you apply it; `j` / `k` choose and Enter restores.
+
+![A saved Plan layout with an ASCII preview of editor, Notes and terminal panes](assets/layouts.png)
+
+<details>
+<summary><strong>And when you need a moment… F12.</strong></summary>
+
+The ASCII cover fills Neovim while your jobs keep running. Press F12 again to
+return. It covers the editor visually; it is not a password or operating-system lock.
+
+![NEXT Deep Space, the full-screen animated ASCII cover](assets/screensaver.png)
+
+</details>
+
+All screenshots use a disposable demo project. No personal code or real agent
+conversation is shown. [Artwork and screenshot details](assets/README.md).
 
 ## Shortcuts
 
 `<leader>` is your existing leader; the examples below assume Space.
 The Space p actions work in Studio terminals as well as Normal mode.
+
+<details open>
+<summary><strong>The keyboard map</strong></summary>
 
 | Keys | Action |
 | --- | --- |
@@ -88,6 +157,8 @@ The Space p actions work in Studio terminals as well as Normal mode.
 | `Ctrl-h/j/k/l` | Move between panes (existing Normal bindings are respected) |
 | `Esc Esc` | Leave terminal input |
 | `gt` / `gT` | Next / previous project tab |
+
+</details>
 
 `:StudioZoom`, `:StudioResize`, `:StudioSwap`, `:StudioUndo`, `:StudioRedo`,
 `:StudioRename`, `:StudioNotes`, `:StudioCheck`, `:StudioTasks` and
@@ -155,6 +226,9 @@ marker names only. Existing file-browser plugins retain their configuration.
 
 ## Upgrading from 0.1
 
+<details>
+<summary><strong>Changes to Files panes and saved layouts</strong></summary>
+
 Version 0.2 removes the custom Files pane, preview, drawer and Yazi integration.
 Remove any `files = {...}` option and any calls to `files()` or `file_drawer()`
 from your configuration. `Space p f`, `Space p F`, `:StudioFiles` and
@@ -166,6 +240,8 @@ splits while retaining the other pane roles, names, files and proportions.
 A Files-only arrangement becomes one empty Editor. This migration happens in
 memory; your next normal layout save writes the updated arrangement. External
 browser windows are excluded from Studio's saved layouts.
+
+</details>
 
 ## Persistence and privacy
 
@@ -206,4 +282,6 @@ Removing the plugin folder does not delete project files or saved Notes.
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+Code, documentation and original artwork are available under the [MIT license](LICENSE).
+The logo is an original geometric design; editable SVG sources and provenance
+are in [assets](assets/README.md).
